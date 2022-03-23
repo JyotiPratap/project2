@@ -88,7 +88,7 @@ const college = async function (req, res) {
      }
  
    };
-
+ 
    const getcollege = async function (req, res) {
      try{
          const collegeName = req.query.collegeName
