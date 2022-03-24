@@ -1,5 +1,3 @@
-let axios = require("axios");
-const jwt = require("jsonwebtoken");
 const collegemodel = require("../models/College.js");
 const internmodel = require("../models/Intern.js")
 let validator =require("email-validator");
@@ -16,15 +14,15 @@ const college = async function (req, res) {
          else {
               let name = req.body.name
               if(!name)
-              return res.status(400).send({status: false,msg:"Enter Valid name"})
+              return res.status(400).send({status: false,msg:"Enter name"})
               
               let fullName = req.body.fullName
               if(!fullName)
-              return res.status(400).send({status: false,msg:"Enter Valid fullName"})
+              return res.status(400).send({status: false,msg:"Enter fullName"})
              
               let logolink = req.body.logoLink
               if(!logolink)
-              return res.status(400).send({status: false,msg:"Enter Valid logoLink"})
+              return res.status(400).send({status: false,msg:"Enter logoLink"})
 
               let data = await collegemodel.findOne({ name })
               if (data) {
@@ -50,11 +48,11 @@ const college = async function (req, res) {
           else {
                let name = req.body.name
                if(!name)
-               return res.status(400).send({status: false,msg:"Enter Valid name"})
+               return res.status(400).send({status: false,msg:"Enter name"})
                
                let email = req.body.email
                if(!email)
-               return res.status(400).send({status: false,msg:"Enter Valid Email"})
+               return res.status(400).send({status: false,msg:"Enter Email"})
  
                let check = validator.validate(email);
                if (!check) {
@@ -66,7 +64,7 @@ const college = async function (req, res) {
 
                let  mobile = req.body.mobile
                if(!mobile)
-               return res.status(401).send({status: false,msg:"Enter Valid mobilenumber"})
+               return res.status(401).send({status: false,msg:"Enter mobilenumber"})
 
                if (!(/^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/.test(mobile))) {
                     res.status(400).send({status : false , msg : " enter valid mobileno."})
@@ -88,7 +86,7 @@ const college = async function (req, res) {
      }
  
    };
- 
+
    const getcollege = async function (req, res) {
      try{
          const collegeName = req.query.collegeName
@@ -97,7 +95,7 @@ const college = async function (req, res) {
               return res.status(400).send({status:false, msg:"BAD REQUEST please provied valid collegeName"})}
 
          const college =await collegemodel.find({ name:collegeName, isDeleted: false })
-         if (!college) {
+         if (!(college).length>0) {
             return res.status(404).send({ status: false, msg: "BAD REQUEST  college not found" })
           }
            console.log(college)
@@ -126,7 +124,7 @@ const college = async function (req, res) {
                 interests:interests
             }
             
-          return res.status(201).send({ status: true, count : interests.length, msg:ObjectData })
+          return res.status(200).send({ status: true, count : interests.length, msg:ObjectData })
       
       
       }
